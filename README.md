@@ -1,5 +1,5 @@
 # NMMES-backend
-The NMMES (pronounced ne-mess) backend is processing portion of the NMMES family. It provides a node API for applications to encode media using a set of modules.
+The NMMES backend is the processing portion of the NMMES family. It provides a node API for applications to encode media using a set of modules.
 
 ### Dependencies
 - [Node.js](https://nodejs.org/en/) - Required in order to run h265ize.
