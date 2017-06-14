@@ -27,7 +27,7 @@ module.exports = function(env) {
             library: packageJson.name,
             libraryTarget: "umd",
             publicPath: '',
-            filename: 'h265ize-backend.js'
+            filename: 'nmmes-backend.js'
         },
 
         externals: [nodeExternals()],

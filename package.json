@@ -1,5 +1,5 @@
 {
-  "name": "h265ize-backend",
+  "name": "nmmes-backend",
   "version": "0.0.1",
   "description": "A video encoder/transcoder.",
   "author": "Ayrton Sparling",
@@ -12,7 +12,7 @@
     "dev": "webpack --env=development --watch",
     "build": "webpack --define process.env.NODE_ENV=\"production\" --env=production --progress"
   },
-  "main": "h265ize-backend.js",
+  "main": "nmmes-backend.js",
   "dependencies": {
     "bluebird": "^3.5.0",
     "chalk": "^1.1.3",

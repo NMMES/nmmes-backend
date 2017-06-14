@@ -5,9 +5,9 @@ require("source-map-support").install();
 	else if(typeof define === 'function' && define.amd)
 		define(["bluebird", "chalk", "events", "fluent-ffmpeg", "lodash", "lodash/cloneDeep", "lodash/merge", "moment", "moment-duration-format", "npm-query", "path", "query-string", "semver", "tracer"], factory);
 	else if(typeof exports === 'object')
-		exports["h265ize-backend"] = factory(require("bluebird"), require("chalk"), require("events"), require("fluent-ffmpeg"), require("lodash"), require("lodash/cloneDeep"), require("lodash/merge"), require("moment"), require("moment-duration-format"), require("npm-query"), require("path"), require("query-string"), require("semver"), require("tracer"));
+		exports["nmmes-backend"] = factory(require("bluebird"), require("chalk"), require("events"), require("fluent-ffmpeg"), require("lodash"), require("lodash/cloneDeep"), require("lodash/merge"), require("moment"), require("moment-duration-format"), require("npm-query"), require("path"), require("query-string"), require("semver"), require("tracer"));
 	else
-		root["h265ize-backend"] = factory(root["bluebird"], root["chalk"], root["events"], root["fluent-ffmpeg"], root["lodash"], root["lodash/cloneDeep"], root["lodash/merge"], root["moment"], root["moment-duration-format"], root["npm-query"], root["path"], root["query-string"], root["semver"], root["tracer"]);
+		root["nmmes-backend"] = factory(root["bluebird"], root["chalk"], root["events"], root["fluent-ffmpeg"], root["lodash"], root["lodash/cloneDeep"], root["lodash/merge"], root["moment"], root["moment-duration-format"], root["npm-query"], root["path"], root["query-string"], root["semver"], root["tracer"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_8__, __WEBPACK_EXTERNAL_MODULE_9__, __WEBPACK_EXTERNAL_MODULE_10__, __WEBPACK_EXTERNAL_MODULE_11__, __WEBPACK_EXTERNAL_MODULE_12__, __WEBPACK_EXTERNAL_MODULE_13__, __WEBPACK_EXTERNAL_MODULE_14__, __WEBPACK_EXTERNAL_MODULE_15__, __WEBPACK_EXTERNAL_MODULE_16__, __WEBPACK_EXTERNAL_MODULE_17__, __WEBPACK_EXTERNAL_MODULE_18__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -658,4 +658,4 @@ module.exports = __webpack_require__(5);
 /***/ })
 /******/ ]);
 });
-//# sourceMappingURL=h265ize-backend.js.map
+//# sourceMappingURL=nmmes-backend.js.map
