@@ -12,7 +12,7 @@
     "dev": "webpack --env=development --watch",
     "build": "webpack --define process.env.NODE_ENV=\"production\" --env=production --progress"
   },
-  "main": "dist.js",
+  "main": "h265ize-backend.js",
   "dependencies": {
     "bluebird": "^3.5.0",
     "chalk": "^1.1.3",
