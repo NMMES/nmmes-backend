@@ -6,6 +6,8 @@ import ffmpeg from 'fluent-ffmpeg';
 import moment from 'moment';
 require("moment-duration-format");
 import Promise from 'bluebird';
+import fs from 'fs';
+import fileSize from 'filesize';
 import {
     checkForUpdates
 } from './module.js';
@@ -13,6 +15,8 @@ import {
     merge
 } from 'lodash';
 import Path from 'path';
+
+const stat = Promise.promisify(fs.stat);
 
 import Logger from './logger.js';
 
@@ -148,6 +152,7 @@ export default class Video extends EventEmitter {
     }
 
     _stop(err) {
+        let _self = this;
         if (this.stopTime) {
             Logger.warn('Attempted to stop a video which has already stopped.')
             return;
@@ -164,8 +169,20 @@ export default class Video extends EventEmitter {
         let duration = moment.duration(moment(this.stopTime).diff(this.startTime), 'milliseconds').format('h:mm:ss.SSS', {
             trim: false
         });
-        Logger.info(`Finished processing ${chalk.bold(this.input.base)} [${chalk.yellow(duration)}].`);
-        this.emit('stopped');
+        Logger.debug(`File output to ${chalk.bold(this.output.path)}.`);
+        Promise.props({
+            input: stat(_self.input.path),
+            output: stat(_self.output.path),
+        }).then((stats) => {
+            let outputSize = fileSize(stats.output.size);
+            let reductionPercent = (stats.output.size / stats.input.size * 100).toFixed(2);
+            Logger.info(`Finished processing ${chalk.bold(this.input.base)} [${chalk.yellow(duration)}] [${chalk.yellow(outputSize)}] [${chalk.yellow(reductionPercent+'%')}].`);
+        }).catch(err => {
+            Logger.error(err.message);
+        }).reflect().then(() => {
+            this.emit('stopped');
+        });
+
     }
     stop = this._stop;
 }
