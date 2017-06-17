@@ -8,7 +8,7 @@ require("source-map-support").install();
 		exports["nmmes-backend"] = factory(require("bluebird"), require("chalk"), require("events"), require("filesize"), require("fluent-ffmpeg"), require("fs"), require("lodash"), require("lodash/cloneDeep"), require("lodash/merge"), require("moment"), require("moment-duration-format"), require("npm-query"), require("path"), require("query-string"), require("semver"), require("tracer"));
 	else
 		root["nmmes-backend"] = factory(root["bluebird"], root["chalk"], root["events"], root["filesize"], root["fluent-ffmpeg"], root["fs"], root["lodash"], root["lodash/cloneDeep"], root["lodash/merge"], root["moment"], root["moment-duration-format"], root["npm-query"], root["path"], root["query-string"], root["semver"], root["tracer"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_8__, __WEBPACK_EXTERNAL_MODULE_9__, __WEBPACK_EXTERNAL_MODULE_10__, __WEBPACK_EXTERNAL_MODULE_11__, __WEBPACK_EXTERNAL_MODULE_12__, __WEBPACK_EXTERNAL_MODULE_13__, __WEBPACK_EXTERNAL_MODULE_14__, __WEBPACK_EXTERNAL_MODULE_15__, __WEBPACK_EXTERNAL_MODULE_16__, __WEBPACK_EXTERNAL_MODULE_17__, __WEBPACK_EXTERNAL_MODULE_18__, __WEBPACK_EXTERNAL_MODULE_19__, __WEBPACK_EXTERNAL_MODULE_20__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_7__, __WEBPACK_EXTERNAL_MODULE_8__, __WEBPACK_EXTERNAL_MODULE_9__, __WEBPACK_EXTERNAL_MODULE_10__, __WEBPACK_EXTERNAL_MODULE_11__, __WEBPACK_EXTERNAL_MODULE_12__, __WEBPACK_EXTERNAL_MODULE_13__, __WEBPACK_EXTERNAL_MODULE_14__, __WEBPACK_EXTERNAL_MODULE_15__, __WEBPACK_EXTERNAL_MODULE_16__, __WEBPACK_EXTERNAL_MODULE_17__, __WEBPACK_EXTERNAL_MODULE_18__, __WEBPACK_EXTERNAL_MODULE_19__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -74,7 +74,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 21);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -84,7 +84,7 @@ return /******/ (function(modules) { // webpackBootstrap
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_chalk__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_chalk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_chalk__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_tracer__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_tracer__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_tracer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_tracer__);
 
 
@@ -137,21 +137,22 @@ module.exports = require("chalk");
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(module) {/* unused harmony export checkForUpdates */
+/* unused harmony export createModuleQuery */
+/* unused harmony export checkForUpdates */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__logger_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_chalk__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_chalk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_chalk__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_bluebird__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_bluebird___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_bluebird__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_query_string__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_query_string__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_query_string___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_query_string__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash_cloneDeep__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash_cloneDeep__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash_cloneDeep___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_lodash_cloneDeep__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash_merge__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash_merge__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash_merge___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_lodash_merge__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_semver__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_semver__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_semver___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_semver__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_npm_query__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_npm_query__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_npm_query___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_npm_query__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_events__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_events___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_events__);
@@ -170,7 +171,6 @@ module.exports = require("chalk");
 class Module extends __WEBPACK_IMPORTED_MODULE_8_events__["EventEmitter"] {
     constructor(info, options = {}) {
         super();
-        this.provides = [];
         this.tolerance = 'required';
         this.displayName = this.constructor.name;
         if (typeof info === 'undefined') {
@@ -196,9 +196,6 @@ class Module extends __WEBPACK_IMPORTED_MODULE_8_events__["EventEmitter"] {
         }
 
         video.moduleCache[createModuleQuery(this)] = this;
-        for (let name of this.provides) {
-            video.moduleCache[createModuleQuery(module, name)] = module;
-        }
 
         return this.execute(video, cache);
     }
@@ -309,7 +306,6 @@ function checkForUpdates(modules) {
         }
     });
 }
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(7)(module)))
 
 /***/ }),
 /* 4 */
@@ -361,20 +357,20 @@ process.on("unhandledRejection", function (reason) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_chalk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_chalk__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_events__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_events___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_events__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_fluent_ffmpeg__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_fluent_ffmpeg__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_fluent_ffmpeg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_fluent_ffmpeg__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_bluebird__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_bluebird___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_bluebird__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_fs__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_fs__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_fs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_fs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filesize__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filesize__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filesize___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_filesize__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__module_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_path__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_path__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_path___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_path__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__logger_js__ = __webpack_require__(0);
 
@@ -385,7 +381,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 
-__webpack_require__(15);
+__webpack_require__(14);
 
 
 
@@ -542,8 +538,8 @@ class Video extends __WEBPACK_IMPORTED_MODULE_1_events___default.a {
             input: stat(_self.input.path),
             output: stat(_self.output.path)
         }).then(stats => {
-            let outputSize = __WEBPACK_IMPORTED_MODULE_6_filesize___default()(stats.output.size, { bits: true });
-            let reductionPercent = (stats.input.size / stats.output.size * 100).toFixed(2);
+            let outputSize = __WEBPACK_IMPORTED_MODULE_6_filesize___default()(stats.output.size);
+            let reductionPercent = (stats.output.size / stats.input.size * 100).toFixed(2);
             __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].info(`Finished processing ${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.bold(this.input.base)} [${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.yellow(duration)}] [${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.yellow(outputSize)}] [${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.yellow(reductionPercent + '%')}].`);
         }).catch(err => {
             __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].error(err.message);
@@ -576,112 +572,82 @@ function calcDuration(input) {
 /* 7 */
 /***/ (function(module, exports) {
 
-module.exports = function(originalModule) {
-	if(!originalModule.webpackPolyfill) {
-		var module = Object.create(originalModule);
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		Object.defineProperty(module, "exports", {
-			enumerable: true,
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
+module.exports = require("filesize");
 
 /***/ }),
 /* 8 */
 /***/ (function(module, exports) {
 
-module.exports = require("filesize");
+module.exports = require("fluent-ffmpeg");
 
 /***/ }),
 /* 9 */
 /***/ (function(module, exports) {
 
-module.exports = require("fluent-ffmpeg");
+module.exports = require("fs");
 
 /***/ }),
 /* 10 */
 /***/ (function(module, exports) {
 
-module.exports = require("fs");
+module.exports = require("lodash");
 
 /***/ }),
 /* 11 */
 /***/ (function(module, exports) {
 
-module.exports = require("lodash");
+module.exports = require("lodash/cloneDeep");
 
 /***/ }),
 /* 12 */
 /***/ (function(module, exports) {
 
-module.exports = require("lodash/cloneDeep");
+module.exports = require("lodash/merge");
 
 /***/ }),
 /* 13 */
 /***/ (function(module, exports) {
 
-module.exports = require("lodash/merge");
+module.exports = require("moment");
 
 /***/ }),
 /* 14 */
 /***/ (function(module, exports) {
 
-module.exports = require("moment");
+module.exports = require("moment-duration-format");
 
 /***/ }),
 /* 15 */
 /***/ (function(module, exports) {
 
-module.exports = require("moment-duration-format");
+module.exports = require("npm-query");
 
 /***/ }),
 /* 16 */
 /***/ (function(module, exports) {
 
-module.exports = require("npm-query");
+module.exports = require("path");
 
 /***/ }),
 /* 17 */
 /***/ (function(module, exports) {
 
-module.exports = require("path");
+module.exports = require("query-string");
 
 /***/ }),
 /* 18 */
 /***/ (function(module, exports) {
 
-module.exports = require("query-string");
+module.exports = require("semver");
 
 /***/ }),
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = require("semver");
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports) {
-
 module.exports = require("tracer");
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(5);

@@ -4,4 +4,9 @@
         "es2016",
         "stage-2"
     ],
+    "env": {
+        "test": {
+            "plugins": ["istanbul"]
+        }
+    }
 }

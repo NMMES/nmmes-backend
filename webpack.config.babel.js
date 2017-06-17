@@ -27,7 +27,9 @@ module.exports = function(env) {
             library: packageJson.name,
             libraryTarget: "umd",
             publicPath: '',
-            filename: packageJson.name+'.js'
+            filename: packageJson.name + '.js',
+            devtoolModuleFilenameTemplate: '[absolute-resource-path]',
+            devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
         },
 
         externals: [nodeExternals()],
@@ -62,6 +64,6 @@ module.exports = function(env) {
             colors: true
         },
 
-        devtool: 'source-map',
+        devtool: 'cheap-module-source-map',
     };
 }

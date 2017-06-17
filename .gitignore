@@ -1,5 +1,4 @@
-build
-test
+examples/test
 
 # Logs
 logs

@@ -15,7 +15,6 @@ import {
 } from 'events';
 
 export default class Module extends EventEmitter {
-    provides = []
     tolerance = 'required'
     constructor(info, options = {}) {
         super();
@@ -43,9 +42,6 @@ export default class Module extends EventEmitter {
         }
 
         video.moduleCache[createModuleQuery(this)] = this;
-        for (let name of this.provides) {
-            video.moduleCache[createModuleQuery(module, name)] = module;
-        }
 
         return this.execute(video, cache);
     }
@@ -104,7 +100,7 @@ export default class Module extends EventEmitter {
     }
 }
 
-function createModuleQuery(module, name) {
+export function createModuleQuery(module, name) {
     return name || module.displayName + '?' + queryString.stringify(module.args);
 }
 
