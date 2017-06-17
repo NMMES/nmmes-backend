@@ -17,7 +17,7 @@ yarn add nmmes-backend
 You may install NMMES-backend via npm or yarn.
 
 ### Usage
-
+In order to use this example you must also install the encoder module `nmmes-module-encoder`.
 ```javascript
 // import * as NMMES from 'nmmes-backend';
 // import encoder from 'nmmes-module-encoder';
