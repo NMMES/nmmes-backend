@@ -42,9 +42,9 @@ let video = new NMMES.Video({
 
 video.on('stop', function(err) {
     if (err)
-        return console.log('Error encoding video', err);
+        return NMMES.Logger.error('Error encoding video', err);
 
-    console.log('Video encoding complete.');
+    NMMES.Logger.log('Video encoding complete.');
 });
 
 video.start();
