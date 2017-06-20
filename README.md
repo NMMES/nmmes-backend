@@ -9,7 +9,7 @@ The NMMES backend is the processing portion of the NMMES family. It provides a n
 - [ffmpeg](https://ffmpeg.org/) - Does the video conversion among other things.
 
 ### Installation
-```bash
+```
 npm install -S nmmes-backend
 yarn add nmmes-backend
 ```
