@@ -9,12 +9,7 @@ The NMMES backend is the processing portion of the NMMES family. It provides a n
 - [ffmpeg](https://ffmpeg.org/) - Does the video conversion among other things.
 
 ### Installation
-```
-npm install -S nmmes-backend
-yarn add nmmes-backend
-```
-
-You may install NMMES-backend via npm or yarn.
+[![NPM](https://nodei.co/npm/nmmes-backend.png?compact=true)](https://nodei.co/npm/nmmes-backend/)
 
 ### Usage
 In order to use this example you must also install the encoder module `nmmes-module-encoder`.
