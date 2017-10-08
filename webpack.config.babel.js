@@ -23,7 +23,7 @@ module.exports = function(env) {
         ],
 
         output: {
-            path: env === 'production' ? path.resolve(__dirname) : path.join(tempDir),
+            path: env === 'production' ? path.resolve(__dirname, 'dist') : path.join(tempDir),
             library: packageJson.name,
             libraryTarget: "umd",
             publicPath: '',

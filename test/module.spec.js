@@ -6,7 +6,11 @@ import {
     Logger,
     Video
 } from '../src/index.js';
-import {createModuleQuery} from '../src/module.js';
+import {
+    createModuleQuery
+} from '../src/module.js';
+import Path from 'path';
+import os from 'os';
 Logger.setLevel('warn');
 
 suite('Module', function() {
@@ -16,8 +20,15 @@ suite('Module', function() {
                 name: 'nmmes-module-test-module'
             });
         }
-        executable(video, map) {
+        init() {
             return new Promise(function(resolve, reject) {
+                resolve();
+            });
+        }
+        executable(video, map) {
+            let _self = this;
+            return new Promise(function(resolve, reject) {
+                _self.executableRan = true;
                 resolve();
             });
         }
@@ -25,10 +36,10 @@ suite('Module', function() {
     let testModule = new TestModule();
     let video = new Video({
         input: {
-            path: '../examples/test/hale_bopp_1.mpg'
+            path: 'test/nmmes-test-files/video/hale_bopp_1-(invalidCrop240p)-480p[yuv420p][mpeg1]-noadu-nosub.mpg'
         },
         output: {
-            path: '/tmp/nmmes-backend-test.mkv'
+            path: Path.resolve(os.tmpdir(), 'nmmes-backend-test.mkv')
         }
     });
     suite('#constructor(info, options = {})', function() {
@@ -37,15 +48,21 @@ suite('Module', function() {
         });
     });
     suite('#run(video, force = false, cache = true)', function() {
-        let startEmitted = false, stopEmitted = false;
+        let startEmitted = false,
+            stopEmitted = false;
         testModule.once('start', () => startEmitted = true);
         testModule.once('stop', () => stopEmitted = true);
         test('should return an empty object', function(done) {
-
             testModule.run(video).then((result) => {
                 done(assert.isEmpty(result))
             }, done);
         });
+        test('should run init', (done) => {
+            testModule.init(video).then(done, done);
+        })
+        test('should run executable', () => {
+            assert.isTrue(testModule.executableRan, 'module did not run executableRan')
+        })
         test('should emit start', function() {
             assert.isTrue(startEmitted, 'module did not emit start event');
         });

@@ -1,14 +1,11 @@
 import chalk from 'chalk';
 import tracer from 'tracer';
 
+const moduleRegex = /node_modules\/(.*?(?=\/))/;
+
 const options = {
-    format: [
-        "[{{title}}] {{message}}",
-        {
-            trace: "[{{title}}] {{message}}\n\t({{method}} in {{path}}:{{line}})",
-            debug: "[{{title}}] {{message}} ({{method}})",
-        }
-    ],
+    format: "{{timestamp}} ({{method}}) [{{file}}:{{line}}] <{{title}}> {{message}}",
+    dateformat: "HH:MM:ss.L",
     filters: [{
         trace: chalk.magenta,
         debug: chalk.blue,
@@ -16,18 +13,15 @@ const options = {
         warn: chalk.yellow,
         error: chalk.red
     }],
-    dateformat: "HH:MM:ss.L",
     preprocess: function(data) {
         data.title = data.title.toUpperCase();
+        const matches = data.path.match(moduleRegex);
+        data.file = matches && matches[1] ? `${matches[1]}>${data.file}` : data.file;
     },
-    transport: function(data) {
-        if (logger.stream) {
-            logger.stream.write(data.output + "\n");
-        } else {
-            console.log(data.output);
-        }
+    transport: data => {
+        process.stdout.write(data.output + "\n");
     }
-}
+};
 
 let logger = tracer.colorConsole(options);
 logger.setLevel = (level) => {

@@ -8,7 +8,7 @@ require("source-map-support").install();
 		exports["nmmes-backend"] = factory(require("bluebird"), require("chalk"), require("events"), require("filesize"), require("fluent-ffmpeg"), require("fs"), require("lodash"), require("lodash/cloneDeep"), require("lodash/merge"), require("moment"), require("moment-duration-format"), require("npm-query"), require("path"), require("query-string"), require("semver"), require("tracer"));
 	else
 		root["nmmes-backend"] = factory(root["bluebird"], root["chalk"], root["events"], root["filesize"], root["fluent-ffmpeg"], root["fs"], root["lodash"], root["lodash/cloneDeep"], root["lodash/merge"], root["moment"], root["moment-duration-format"], root["npm-query"], root["path"], root["query-string"], root["semver"], root["tracer"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_7__, __WEBPACK_EXTERNAL_MODULE_8__, __WEBPACK_EXTERNAL_MODULE_9__, __WEBPACK_EXTERNAL_MODULE_10__, __WEBPACK_EXTERNAL_MODULE_11__, __WEBPACK_EXTERNAL_MODULE_12__, __WEBPACK_EXTERNAL_MODULE_13__, __WEBPACK_EXTERNAL_MODULE_14__, __WEBPACK_EXTERNAL_MODULE_15__, __WEBPACK_EXTERNAL_MODULE_16__, __WEBPACK_EXTERNAL_MODULE_17__, __WEBPACK_EXTERNAL_MODULE_18__, __WEBPACK_EXTERNAL_MODULE_19__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_7__, __WEBPACK_EXTERNAL_MODULE_8__, __WEBPACK_EXTERNAL_MODULE_9__, __WEBPACK_EXTERNAL_MODULE_10__, __WEBPACK_EXTERNAL_MODULE_11__, __WEBPACK_EXTERNAL_MODULE_12__, __WEBPACK_EXTERNAL_MODULE_13__, __WEBPACK_EXTERNAL_MODULE_14__, __WEBPACK_EXTERNAL_MODULE_15__, __WEBPACK_EXTERNAL_MODULE_16__, __WEBPACK_EXTERNAL_MODULE_17__, __WEBPACK_EXTERNAL_MODULE_18__, __WEBPACK_EXTERNAL_MODULE_19__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -134,6 +134,47 @@ module.exports = require("chalk");
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports) {
+
+module.exports = require("events");
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_bluebird__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_bluebird___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_bluebird__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__logger_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__module_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__video_js__ = __webpack_require__(6);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Module", function() { return __WEBPACK_IMPORTED_MODULE_2__module_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Video", function() { return __WEBPACK_IMPORTED_MODULE_3__video_js__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Logger", function() { return __WEBPACK_IMPORTED_MODULE_1__logger_js__["a"]; });
+
+
+__WEBPACK_IMPORTED_MODULE_0_bluebird___default.a.config({
+    // Enable warnings
+    warnings: true,
+    // Enable long stack traces
+    longStackTraces: true,
+    // Enable cancellation
+    cancellation: true,
+    // Enable monitoring
+    monitoring: false
+});
+
+process.on("unhandledRejection", function (reason) {
+    __WEBPACK_IMPORTED_MODULE_1__logger_js__["a" /* default */].error('UNHANDLED ERROR:', reason);
+});
+
+
+
+
+
+/***/ }),
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -154,7 +195,7 @@ module.exports = require("chalk");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_semver___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_semver__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_npm_query__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_npm_query___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_npm_query__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_events__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_events__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_events___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_events__);
 
 
@@ -308,54 +349,13 @@ function checkForUpdates(modules) {
 }
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = require("events");
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_bluebird__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_bluebird___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_bluebird__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__logger_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__module_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__video_js__ = __webpack_require__(6);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Module", function() { return __WEBPACK_IMPORTED_MODULE_2__module_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Video", function() { return __WEBPACK_IMPORTED_MODULE_3__video_js__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Logger", function() { return __WEBPACK_IMPORTED_MODULE_1__logger_js__["a"]; });
-
-
-__WEBPACK_IMPORTED_MODULE_0_bluebird___default.a.config({
-    // Enable warnings
-    warnings: true,
-    // Enable long stack traces
-    longStackTraces: true,
-    // Enable cancellation
-    cancellation: true,
-    // Enable monitoring
-    monitoring: false
-});
-
-process.on("unhandledRejection", function (reason) {
-    __WEBPACK_IMPORTED_MODULE_1__logger_js__["a" /* default */].error('UNHANDLED ERROR:', reason);
-});
-
-
-
-
-
-/***/ }),
 /* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_chalk__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_chalk___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_chalk__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_events__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_events__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_events___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_events__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_fluent_ffmpeg__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_fluent_ffmpeg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_fluent_ffmpeg__);
@@ -367,12 +367,11 @@ process.on("unhandledRejection", function (reason) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_fs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_fs__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filesize__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_filesize___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_filesize__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__module_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_path__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_path___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_path__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__logger_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_path__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_path___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_path__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__logger_js__ = __webpack_require__(0);
 
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -388,14 +387,13 @@ __webpack_require__(14);
 
 
 
-
 const stat = __WEBPACK_IMPORTED_MODULE_4_bluebird___default.a.promisify(__WEBPACK_IMPORTED_MODULE_5_fs___default.a.stat);
 
 
 
 class Video extends __WEBPACK_IMPORTED_MODULE_1_events___default.a {
     constructor(options) {
-        __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].debug(`Creating ${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.bold(__WEBPACK_IMPORTED_MODULE_9_path___default.a.basename(options.input.path))}.`);
+        __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].debug(`Creating ${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.bold(__WEBPACK_IMPORTED_MODULE_8_path___default.a.basename(options.input.path))}.`);
 
         if (!options.input.path) throw new Error('options.input.path must be provided.');
         if (!options.output.path) throw new Error('options.output.path must be provided.');
@@ -404,16 +402,19 @@ class Video extends __WEBPACK_IMPORTED_MODULE_1_events___default.a {
 
         this.curretModuleIndex = 0;
         this.moduleCache = {};
+        this.running = false;
+        this.started = false;
         this.stop = this._stop;
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_8_lodash__["merge"])(this, {
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_7_lodash__["merge"])(this, {
             strict: true,
-            input: _extends({}, __WEBPACK_IMPORTED_MODULE_9_path___default.a.parse(options.input.path), {
+            modules: [],
+            input: _extends({}, __WEBPACK_IMPORTED_MODULE_8_path___default.a.parse(options.input.path), {
                 map: {
                     streams: {},
                     format: {}
                 }
             }),
-            output: _extends({}, __WEBPACK_IMPORTED_MODULE_9_path___default.a.parse(options.output.path), {
+            output: _extends({}, __WEBPACK_IMPORTED_MODULE_8_path___default.a.parse(options.output.path), {
                 map: {
                     streams: {},
                     format: {}
@@ -423,12 +424,12 @@ class Video extends __WEBPACK_IMPORTED_MODULE_1_events___default.a {
 
         // checkForUpdates(this.modules);
 
-        __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].trace('Video created:\n', this);
+        __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].trace('Video created:\n', this);
     }
-    initialized() {
+    initialize() {
         let _self = this;
         return new __WEBPACK_IMPORTED_MODULE_4_bluebird___default.a((resolve, reject) => {
-            __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].trace('Generating metadata for input...');
+            __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].trace('Generating metadata for input...');
             __WEBPACK_IMPORTED_MODULE_2_fluent_ffmpeg___default.a.ffprobe(_self.input.path, function (err, metadata) {
                 if (err) return reject(err);
 
@@ -451,15 +452,17 @@ class Video extends __WEBPACK_IMPORTED_MODULE_1_events___default.a {
                     _self.output.map.streams[stream.index] = {
                         map: `${stream.input}:${stream.index}`,
                         ['metadata:s:' + pos]: [],
-                        ['disposition:' + pos]: []
+                        ['disposition:' + pos]: [],
+                        vf: [],
+                        af: []
                     };
                 }
 
                 if (isNaN(metadata.format.duration)) {
-                    __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].trace('Invalid duration:', __WEBPACK_IMPORTED_MODULE_0_chalk___default.a.bold(metadata.format.duration));
-                    __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].debug(`Duration invalid, attempting to calculate manually...`);
-                    calcDuration(_self.input.path).then(duration => {
-                        __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].debug(`Duration calculated to ${duration} second(s).`);
+                    __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].trace('Invalid duration:', __WEBPACK_IMPORTED_MODULE_0_chalk___default.a.bold(metadata.format.duration));
+                    __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].debug(`Duration invalid, attempting to calculate manually...`);
+                    Video.calcDuration(_self.input.path).then(duration => {
+                        __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].debug(`Duration calculated to ${duration} second(s).`);
                         metadata.format.duration = duration;
                         resolve();
                     }, reject);
@@ -472,8 +475,10 @@ class Video extends __WEBPACK_IMPORTED_MODULE_1_events___default.a {
 
     start() {
         let _self = this;
+        this.running = true;
+        this.started = true;
         this.emit('start');
-        __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].info(`Started processing ${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.bold(this.input.base)}.`);
+        __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].info(`Started processing ${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.bold(this.input.base)} -> ${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.bold(this.output.base)}.`);
         this.startTime = new Date();
 
         return new __WEBPACK_IMPORTED_MODULE_4_bluebird___default.a((resolve, reject) => {
@@ -482,13 +487,13 @@ class Video extends __WEBPACK_IMPORTED_MODULE_1_events___default.a {
                 if (!module.init) return array;
                 array.push(new __WEBPACK_IMPORTED_MODULE_4_bluebird___default.a((resolve, reject) => {
                     module.init(_self).then(resolve, err => {
-                        __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].error(`Module ${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.bold(module.displayName)} initialization failed: ${err.message}`);
-                        __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].debug('Error:', err);
+                        __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].error(`Module ${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.bold(module.displayName)} initialization failed: ${err.message}`);
+                        __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].debug('Error:', err);
                         reject(new Error('Module initialization failed.'));
                     });
                 }));
                 return array;
-            }, [])).then(this.initialized.bind(this)).then(resolve).return(0).then(this.runModule.bind(this), err => {
+            }, [])).then(this.initialize.bind(this)).then(resolve).return(0).then(this.runModule.bind(this), err => {
                 this._stop(err);
                 reject(err);
             });
@@ -502,12 +507,12 @@ class Video extends __WEBPACK_IMPORTED_MODULE_1_events___default.a {
         }
         if (this.stopTime) return;
         const moduleName = this.modules[number].displayName;
-        __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].trace(`Running module ${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.bold(moduleName)} [${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.bold(number)}].`);
+        __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].trace(`Running module ${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.bold(moduleName)} [${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.bold(number)}].`);
         this.modules[number].run(this).then(() => {
             this.runModule(++number);
         }, err => {
             if (this.modules[number].tolerance === 'required') {
-                __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].debug('Error:', err);
+                __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].debug('Error:', err);
                 return this._stop(new Error('Module execution failed.'));
             }
 
@@ -517,15 +522,16 @@ class Video extends __WEBPACK_IMPORTED_MODULE_1_events___default.a {
 
     _stop(err) {
         let _self = this;
+        this.running = false;
         if (this.stopTime) {
-            __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].warn('Attempted to stop a video which has already stopped.');
+            __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].warn('Attempted to stop a video which has already stopped.');
             return;
         }
         this.stopTime = new Date();
         this.emit('stop', err);
         if (err) {
-            __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].error(`Video stopped processing with error: ${err.message}`);
-            __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].debug(err);
+            __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].error(`Video stopped processing with error: ${err.message}`);
+            __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].debug(err);
             this.emit('stopped', err);
             this.error = err;
             return;
@@ -533,40 +539,63 @@ class Video extends __WEBPACK_IMPORTED_MODULE_1_events___default.a {
         let duration = __WEBPACK_IMPORTED_MODULE_3_moment___default.a.duration(__WEBPACK_IMPORTED_MODULE_3_moment___default()(this.stopTime).diff(this.startTime), 'milliseconds').format('h:mm:ss.SSS', {
             trim: false
         });
-        __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].debug(`File output to ${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.bold(this.output.path)}.`);
+        __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].debug(`File output to ${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.bold(this.output.path)}.`);
         __WEBPACK_IMPORTED_MODULE_4_bluebird___default.a.props({
             input: stat(_self.input.path),
             output: stat(_self.output.path)
         }).then(stats => {
             let outputSize = __WEBPACK_IMPORTED_MODULE_6_filesize___default()(stats.output.size);
             let reductionPercent = (stats.output.size / stats.input.size * 100).toFixed(2);
-            __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].info(`Finished processing ${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.bold(this.input.base)} [${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.yellow(duration)}] [${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.yellow(outputSize)}] [${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.yellow(reductionPercent + '%')}].`);
+            __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].info(`Finished processing ${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.bold(this.input.base)} [${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.yellow(duration)}] [${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.yellow(outputSize)}] [${__WEBPACK_IMPORTED_MODULE_0_chalk___default.a.yellow(reductionPercent + '%')}].`);
         }).catch(err => {
-            __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].error(err.message);
+            __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].error(err.message);
         }).reflect().then(() => {
             this.emit('stopped');
+        });
+    }
+
+
+    static getDuration(input, type = 'input') {
+        return new __WEBPACK_IMPORTED_MODULE_4_bluebird___default.a(function (resolve, reject) {
+            if (typeof input === 'string') {
+                return Video.calcDuration(input).then(resolve, reject);
+            }
+            if (input instanceof Video) {
+                if (type === 'input') {
+                    if (input.input.metadata[0].format.duration && !isNaN(input.input.metadata[0].format.duration)) return resolve(input.input.metadata[0].format.duration);
+
+                    return Video.calcDuration(input.input.metadata[0].format.duration).then(resolve, reject);
+                }
+                if (type === 'output') {
+                    if (input.output.metadata[0].format.duration && !isNaN(input.output.metadata[0].format.duration)) return resolve(input.output.metadata[0].format.duration);
+
+                    return Video.calcDuration(input.output.metadata[0].format.duration).then(resolve, reject);
+                }
+            }
+
+            reject(new Error('Unknown input type.'));
+        });
+    }
+
+    static calcDuration(input) {
+        return new __WEBPACK_IMPORTED_MODULE_4_bluebird___default.a((resolve, reject) => {
+            __WEBPACK_IMPORTED_MODULE_2_fluent_ffmpeg___default()(input).outputFormat('null').output('-').on('start', function (commandLine) {
+                __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].trace('[FFMPEG] Query:', commandLine);
+            }).on('error', function (err) {
+                reject(err);
+            }).on('end', function (stdout, stderr) {
+                let lines = stderr.split('\n');
+                let lastTime = lines[lines.length - 3];
+                let duration = lastTime.match(new RegExp('time=(([0-9]|\:|\.)+) bitrate'))[1];
+                let seconds = __WEBPACK_IMPORTED_MODULE_3_moment___default.a.duration(duration).format("s", 6);
+                __WEBPACK_IMPORTED_MODULE_9__logger_js__["a" /* default */].trace(`Duration manually calculated to ${seconds} second(s).`);
+                resolve(seconds);
+            }).run();
         });
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Video;
 
-
-function calcDuration(input) {
-    return new __WEBPACK_IMPORTED_MODULE_4_bluebird___default.a((resolve, reject) => {
-        __WEBPACK_IMPORTED_MODULE_2_fluent_ffmpeg___default()(input).outputFormat('null').output('-').on('start', function (commandLine) {
-            __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].trace('[FFMPEG] Query:', commandLine);
-        }).on('error', function (err) {
-            reject(err);
-        }).on('end', function (stdout, stderr) {
-            let lines = stderr.split('\n');
-            let lastTime = lines[lines.length - 3];
-            let duration = lastTime.match(new RegExp('time=(([0-9]|\:|\.)+) bitrate'))[1];
-            let seconds = __WEBPACK_IMPORTED_MODULE_3_moment___default.a.duration(duration).format("s", 6);
-            __WEBPACK_IMPORTED_MODULE_10__logger_js__["a" /* default */].trace(`Duration manually calculated to ${seconds} second(s).`);
-            resolve(seconds);
-        }).run();
-    });
-}
 
 /***/ }),
 /* 7 */
@@ -650,7 +679,7 @@ module.exports = require("tracer");
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(5);
+module.exports = __webpack_require__(4);
 
 
 /***/ })

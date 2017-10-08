@@ -1,7 +1,7 @@
 {
     "name": "nmmes-backend",
     "version": "0.0.1",
-    "description": "A video encoder/transcoder.",
+    "description": "A modular video encoder/transcoder.",
     "author": "Ayrton Sparling",
     "license": "MIT",
     "engines": {
@@ -10,10 +10,10 @@
     "scripts": {
         "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text npm test",
         "dev": "webpack --env=development --watch",
-        "test": "mocha-webpack --webpack-config webpack.config.babel.js --recursive --ui tdd src test",
+        "test": "git submodule foreach git pull origin master && mocha-webpack --webpack-config webpack.config.babel.js --recursive --ui tdd src test",
         "build": "webpack --define process.env.NODE_ENV=\"production\" --env=production --progress"
     },
-    "main": "nmmes-backend.js",
+    "main": "dist/nmmes-backend.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/NMMES/nmmes-backend.git"
@@ -29,7 +29,6 @@
         "moment-duration-format": "^1.3.0",
         "npm-query": "^1.1.0",
         "query-string": "^4.3.4",
-        "rxjs": "^5.4.0",
         "semver": "^5.3.0",
         "source-map-support": "^0.4.15",
         "tracer": "^0.8.9"
@@ -45,6 +44,7 @@
         "babel-register": "^6.24.1",
         "babel-runtime": "^6.23.0",
         "chai": "^4.0.2",
+        "chai-as-promised": "^7.1.1",
         "cross-env": "^5.0.1",
         "eslint": "^3.19.0",
         "istanbul": "^0.4.5",

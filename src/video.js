@@ -9,9 +9,6 @@ import Promise from 'bluebird';
 import fs from 'fs';
 import fileSize from 'filesize';
 import {
-    checkForUpdates
-} from './module.js';
-import {
     merge
 } from 'lodash';
 import Path from 'path';
@@ -21,8 +18,10 @@ const stat = Promise.promisify(fs.stat);
 import Logger from './logger.js';
 
 export default class Video extends EventEmitter {
-    curretModuleIndex = 0
-    moduleCache = {}
+    curretModuleIndex = 0;
+    moduleCache = {};
+    running = false;
+    started = false;
     constructor(options) {
         Logger.debug(`Creating ${chalk.bold(Path.basename(options.input.path))}.`);
 
@@ -35,6 +34,7 @@ export default class Video extends EventEmitter {
 
         merge(this, {
             strict: true,
+            modules: [],
             input: { ...Path.parse(options.input.path),
                 map: {
                     streams: {},
@@ -53,7 +53,7 @@ export default class Video extends EventEmitter {
 
         Logger.trace('Video created:\n', this);
     }
-    initialized() {
+    initialize() {
         let _self = this;
         return new Promise((resolve, reject) => {
             Logger.trace('Generating metadata for input...');
@@ -80,14 +80,16 @@ export default class Video extends EventEmitter {
                     _self.output.map.streams[stream.index] = {
                         map: `${stream.input}:${stream.index}`,
                         ['metadata:s:' + pos]: [],
-                        ['disposition:' + pos]: []
+                        ['disposition:' + pos]: [],
+                        vf: [],
+                        af: []
                     };
                 }
 
                 if (isNaN(metadata.format.duration)) {
                     Logger.trace('Invalid duration:', chalk.bold(metadata.format.duration));
                     Logger.debug(`Duration invalid, attempting to calculate manually...`);
-                    calcDuration(_self.input.path).then((duration) => {
+                    Video.calcDuration(_self.input.path).then((duration) => {
                         Logger.debug(`Duration calculated to ${duration} second(s).`);
                         metadata.format.duration = duration;
                         resolve();
@@ -101,8 +103,10 @@ export default class Video extends EventEmitter {
 
     start() {
         let _self = this;
+        this.running = true;
+        this.started = true;
         this.emit('start');
-        Logger.info(`Started processing ${chalk.bold(this.input.base)}.`);
+        Logger.info(`Started processing ${chalk.bold(this.input.base)} -> ${chalk.bold(this.output.base)}.`);
         this.startTime = new Date();
 
         return new Promise((resolve, reject) => {
@@ -120,7 +124,7 @@ export default class Video extends EventEmitter {
                     }));
                     return array;
                 }, []))
-                .then(this.initialized.bind(this))
+                .then(this.initialize.bind(this))
                 .then(resolve)
                 .return(0)
                 .then(this.runModule.bind(this), (err) => {
@@ -153,6 +157,7 @@ export default class Video extends EventEmitter {
 
     _stop(err) {
         let _self = this;
+        this.running = false;
         if (this.stopTime) {
             Logger.warn('Attempted to stop a video which has already stopped.')
             return;
@@ -185,26 +190,50 @@ export default class Video extends EventEmitter {
 
     }
     stop = this._stop;
-}
 
-function calcDuration(input) {
-    return new Promise((resolve, reject) => {
-        ffmpeg(input)
-            .outputFormat('null')
-            .output('-')
-            .on('start', function(commandLine) {
-                Logger.trace('[FFMPEG] Query:', commandLine);
-            })
-            .on('error', function(err) {
-                reject(err);
-            })
-            .on('end', function(stdout, stderr) {
-                let lines = stderr.split('\n');
-                let lastTime = lines[lines.length - 3];
-                let duration = lastTime.match(new RegExp('time=(([0-9]|\:|\.)+) bitrate'))[1];
-                let seconds = moment.duration(duration).format("s", 6);
-                Logger.trace(`Duration manually calculated to ${seconds} second(s).`);
-                resolve(seconds);
-            }).run();
-    });
+    static getDuration(input, type = 'input') {
+        return new Promise(function(resolve, reject) {
+            if (typeof input === 'string') {
+                return Video.calcDuration(input).then(resolve, reject);
+            }
+            if (input instanceof Video) {
+                if (type === 'input') {
+                    if (input.input.metadata[0].format.duration && !isNaN(input.input.metadata[0].format.duration))
+                        return resolve(input.input.metadata[0].format.duration);
+
+                    return Video.calcDuration(input.input.metadata[0].format.duration).then(resolve, reject);
+                }
+                if (type === 'output') {
+                    if (input.output.metadata[0].format.duration && !isNaN(input.output.metadata[0].format.duration))
+                        return resolve(input.output.metadata[0].format.duration);
+
+                    return Video.calcDuration(input.output.metadata[0].format.duration).then(resolve, reject);
+                }
+            }
+
+            reject(new Error('Unknown input type.'));
+        });
+    }
+
+    static calcDuration(input) {
+        return new Promise((resolve, reject) => {
+            ffmpeg(input)
+                .outputFormat('null')
+                .output('-')
+                .on('start', function(commandLine) {
+                    Logger.trace('[FFMPEG] Query:', commandLine);
+                })
+                .on('error', function(err) {
+                    reject(err);
+                })
+                .on('end', function(stdout, stderr) {
+                    let lines = stderr.split('\n');
+                    let lastTime = lines[lines.length - 3];
+                    let duration = lastTime.match(new RegExp('time=(([0-9]|\:|\.)+) bitrate'))[1];
+                    let seconds = moment.duration(duration).format("s", 6);
+                    Logger.trace(`Duration manually calculated to ${seconds} second(s).`);
+                    resolve(seconds);
+                }).run();
+        });
+    }
 }
