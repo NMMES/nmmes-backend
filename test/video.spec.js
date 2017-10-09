@@ -18,12 +18,13 @@ suite('Video', function() {
                 name: 'nmmes-module-test-module'
             });
         }
-        async executable(video, map) {
-            return;
+        async executable(map) {
+            return {};
         }
     }
     let testModule = new TestModule();
     let video = new Video({
+        modules: [testModule],
         input: {
             path: 'test/nmmes-test-files/video/hale_bopp_1-(invalidCrop240p)-480p[yuv420p][mpeg1]-noadu-nosub.mpg'
         },
@@ -36,23 +37,27 @@ suite('Video', function() {
             assert.instanceOf(video, Video, 'video is not an instance of Video');
         });
     });
+    suite('#initialize()', () => {
+        test('should create video.input[0].metadata', async() => {
+            await video.initialize();
+            assert.isOk(video.input.metadata[0], 'metadata does not exist');
+        });
+        test('should create stream maps with mandatory key:value pairs', async() => {
+            await video.initialize();
+            for (let [streamIdx, stream] of Object.entries(video.output.map.streams)) {
+                assert.property(stream, 'map');
+                assert.deepInclude(stream, {
+                    ['metadata:s:' + streamIdx]: [],
+                    ['disposition:' + streamIdx]: [],
+                    vf: [],
+                    af: []
+                }, 'does not have matching ');
+            }
+        });
+    });
     suite('#run(video, force = false, cache = true)', () => {
-
-        let startEmitted = false,
-            stopEmitted = false;
-        video.once('start', () => startEmitted = true);
-        video.once('stopped', () => stopEmitted = true);
-        test('should return an empty object', function(done) {
-            video.once('stop', (err) => {
-                done();
-            });
-            video.start();
-        });
-        test('should emit start', function() {
-            assert.isTrue(startEmitted, 'module did not emit start event');
-        });
-        test('should emit stopped', function() {
-            assert.isTrue(stopEmitted, 'module did not emit stop event');
+        test('should return', async() => {
+            assert.isFulfilled(video.run(), 'run failed');
         });
     });
 });

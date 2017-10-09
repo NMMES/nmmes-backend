@@ -1,17 +1,13 @@
-import {
-    assert
-} from 'chai';
+import chai from 'chai';
+import chaiAsPromised from "chai-as-promised";
+chai.use(chaiAsPromised);
+const assert = chai.assert;
 import {
     Module,
-    Logger,
     Video
-} from '../src/index.js';
-import {
-    createModuleQuery
-} from '../src/module.js';
+} from '../src';
 import Path from 'path';
 import os from 'os';
-Logger.setLevel('warn');
 
 suite('Module', function() {
     class TestModule extends Module {
@@ -20,17 +16,11 @@ suite('Module', function() {
                 name: 'nmmes-module-test-module'
             });
         }
-        init() {
-            return new Promise(function(resolve, reject) {
-                resolve();
-            });
+        async init() {
+            return;
         }
-        executable(video, map) {
-            let _self = this;
-            return new Promise(function(resolve, reject) {
-                _self.executableRan = true;
-                resolve();
-            });
+        async executable(map) {
+            return {};
         }
     }
     let testModule = new TestModule();
@@ -47,31 +37,20 @@ suite('Module', function() {
             assert.instanceOf(testModule, Module, 'module is not an instance of Module');
         });
     });
+    suite('#init()', function() {
+        test('should run init', async() => {
+            assert.isFulfilled(testModule.init(), 'init failed');
+        })
+    });
     suite('#run(video, force = false, cache = true)', function() {
-        let startEmitted = false,
-            stopEmitted = false;
-        testModule.once('start', () => startEmitted = true);
-        testModule.once('stop', () => stopEmitted = true);
-        test('should return an empty object', function(done) {
-            testModule.run(video).then((result) => {
-                done(assert.isEmpty(result))
-            }, done);
+        test('should return an empty object', async() => {
+            testModule.attach(video);
+            let results = await testModule.run();
+            assert.isEmpty(results);
         });
-        test('should run init', (done) => {
-            testModule.init(video).then(done, done);
-        })
         test('should run executable', () => {
-            assert.isTrue(testModule.executableRan, 'module did not run executableRan')
+            assert.isFulfilled(testModule.executable(), 'executable failed')
         })
-        test('should emit start', function() {
-            assert.isTrue(startEmitted, 'module did not emit start event');
-        });
-        test('should emit stop', function() {
-            assert.isTrue(stopEmitted, 'module did not emit stop event');
-        });
 
-        test('is cached', function() {
-            assert.exists(video.moduleCache[createModuleQuery(testModule)], 'module was not in video cache');
-        });
     });
 });
