@@ -25,6 +25,7 @@ const options = {
 
 let logger = tracer.colorConsole(options);
 logger.setLevel = (level) => {
+    logger.info(`Log level changed to ${level}.`);
     tracer.setLevel(level);
 };
 export default logger;

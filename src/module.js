@@ -4,18 +4,21 @@ import {
     Logger
 } from './';
 
+const MODULE_VERSION = 1;
+
 import chalk from 'chalk';
 
 export default class Module {
     tolerance = 'required';
+    static options = {};
     constructor(info, options = {}) {
         this.displayName = this.constructor.name;
         if (typeof info === 'undefined') {
             throw new Error(`Module ${this.displayName} must provide an info object.`);
         }
 
-        if (info.nmmes.moduleVersion < 1) {
-            Logger.warn(`Module ${this.displayName}\'s version [${info.nmmes.moduleVersion}] is lower than the required version [1].`);
+        if (info.nmmes && info.nmmes.moduleSysVersion < MODULE_VERSION) {
+            Logger.warn(`Module ${this.displayName}\'s system version [${info.nmmes.moduleSysVersion}] is lower than the required version [${MODULE_VERSION}].`);
         }
 
         this.info = info;
@@ -28,7 +31,7 @@ export default class Module {
 
     attach(video) {
         if (this.video)
-            throw new Error('Video already attacked');
+            throw new Error('Video already attached.');
 
         this.video = video;
     }
@@ -36,7 +39,6 @@ export default class Module {
     async run() {
         if (typeof this.executable !== 'function')
             throw new TypeError(`Module ${this.displayName} must provide an executable class function.`);
-
         let results = await this.executable(Object.assign({}, this.video.output.map));
 
         if (typeof results === 'undefined')
@@ -47,5 +49,14 @@ export default class Module {
         Logger.trace(`Module ${chalk.bold(this.displayName)} has finished. Results:\n`, JSON.stringify(results));
 
         return results;
+    }
+
+    static defaults(moduleClass) {
+        let defaults = {};
+        for (const [key, val] of Object.entries(moduleClass.options())) {
+            if (typeof val.default !== 'undefined')
+                defaults[key] = val.default;
+        }
+        return defaults;
     }
 }

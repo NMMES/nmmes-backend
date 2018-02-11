@@ -14,6 +14,17 @@ import {
     merge
 } from 'lodash';
 
+function once(promise) {
+    let resolved = false,
+        _self = this;
+    return async function() {
+        if (resolved)
+            return resolved;
+
+        return resolved = promise.apply(_self, arguments);
+    }
+}
+
 const fs = Bluebird.promisifyAll(require("fs"));
 const ffmpeg = Bluebird.promisifyAll(require("fluent-ffmpeg"));
 
@@ -50,13 +61,49 @@ export default class Video {
         Logger.trace('Video created:\n', this);
     }
 
-    async initialize() {
+    async _initializeOutput() {
+        Logger.trace('Generating metadata for output...');
+
+        let metadata = await ffmpeg.ffprobeAsync(this.output.path);
+
+        if (isNaN(metadata.format.duration)) {
+
+            Logger.trace('Invalid duration:', chalk.bold(metadata.format.duration));
+            Logger.debug(`Duration invalid, attempting to calculate manually...`);
+
+            let duration = await Video._calcDuration(this.output.path);
+
+            Logger.debug(`Duration calculated to ${duration} second(s).`);
+            metadata.format.duration = duration;
+        }
+
+        // Turn streams array into object indexed by stream index
+        metadata.streams = metadata.streams.reduce((obj, stream) => {
+            stream.input = 0;
+            obj[stream.index] = stream;
+            return obj;
+        }, {});
+
+        this.output.metadata = metadata;
+    }
+
+    _initialize = once(async () => {
         Logger.trace('Generating metadata for input...');
 
         let metadata = await ffmpeg.ffprobeAsync(this.input.path);
 
-        // Lets do some metadata manipulation, I want the streams array as an
-        // object
+        if (isNaN(metadata.format.duration)) {
+
+            Logger.trace('Invalid duration:', chalk.bold(metadata.format.duration));
+            Logger.debug(`Duration invalid, attempting to calculate manually...`);
+
+            let duration = await Video._calcDuration(this.input.path);
+
+            Logger.debug(`Duration calculated to ${duration} second(s).`);
+            metadata.format.duration = duration;
+        }
+
+        // Turn streams array into object indexed by stream index
         metadata.streams = metadata.streams.reduce((obj, stream) => {
             stream.input = 0;
             obj[stream.index] = stream;
@@ -79,16 +126,17 @@ export default class Video {
                 af: []
             };
         }
-        this.initialized = true;
 
         return this;
-    }
+    });
 
     async run() {
         this.running = true;
         this.started = true;
         Logger.info(`Started processing ${chalk.bold(this.input.base)} -> ${chalk.bold(this.output.base)}.`);
         this.startTime = new Date();
+
+        await this._initialize();
 
         const moduleInitPromises = this.modules.reduce((array, module) => {
             if (!module.init)
@@ -99,8 +147,6 @@ export default class Video {
         }, []);
 
         await Promise.all(moduleInitPromises);
-        if (!this.initialized)
-            await this.initialize();
 
         try {
             for (const idx in this.modules) {
@@ -111,13 +157,13 @@ export default class Video {
                 merge(this.output.map, results);
             }
         } catch (e) {
-            this.stop(e);
+            return this.stop(e);
         }
 
-        return;
+        return await this.stop();
     }
 
-    stop(err) {
+    async stop(err) {
         this.running = false;
         this.stopTime = new Date();
 
@@ -125,34 +171,27 @@ export default class Video {
             Logger.error(`Video stopped processing with error: ${err.message}`);
             Logger.debug(err);
             this.error = err;
-            return;
+            throw err;
         }
         let duration = moment.duration(moment(this.stopTime).diff(this.startTime), 'milliseconds').format('h:mm:ss.SSS', {
             trim: false
         });
+
+        if (!fs.existsSync(this.output.path)) {
+            Logger.warn('No output created.');
+            return;
+        }
+
         Logger.debug(`File output to ${chalk.bold(this.output.path)}.`);
 
-        let stats = Promise.all([fs.statAsync(this.input.path), fs.statAsync(this.output.path)]);
+        let stats = await Promise.all([fs.statAsync(this.input.path), fs.statAsync(this.output.path)]);
 
         let outputSize = fileSize(stats[1].size);
         let reductionPercent = (stats[1].size / stats[0].size * 100).toFixed(2);
-        Logger.info(`Finished processing ${chalk.bold(this[0].base)} [${chalk.yellow(duration)}] [${chalk.yellow(outputSize)}] [${chalk.yellow(reductionPercent+'%')}].`);
+        Logger.info(`Finished processing ${chalk.bold(this.input.base)} [${chalk.yellow(duration)}] [${chalk.yellow(outputSize)}] [${chalk.yellow(reductionPercent+'%')}].`);
     }
 
-    duration = {
-        get input() {
-            return !isNaN(this.input.metadata[0].format.duration) ?
-                new Promise(resolve => resolve(this.input.metadata[0].format.duration)) :
-                Video.calcDuration(this.input.path)
-        },
-        get output() {
-            return !isNaN(this.output.metadata[0].format.duration) ?
-                new Promise(resolve => resolve(this.output.metadata[0].format.duration)) :
-                Video.calcDuration(this.output.path)
-        },
-    };
-
-    static calcDuration(input) {
+    static _calcDuration(input) {
         return new Promise((resolve, reject) => {
             ffmpeg(input)
                 .outputFormat('null')

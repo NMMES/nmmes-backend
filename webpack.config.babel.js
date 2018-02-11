@@ -64,6 +64,6 @@ module.exports = function(env) {
             colors: true
         },
 
-        devtool: 'cheap-module-source-map',
+        devtool: 'source-map',
     };
 }
