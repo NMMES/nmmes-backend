@@ -2,7 +2,7 @@
 
 console.log('Running sample.js...');
 
-const nmmes = require('../nmmes-backend.js');
+const nmmes = require('../dist/nmmes-backend.js');
 const encoder = require('nmmes-module-encoder');
 // nmmes.Logger.setLevel('trace');
 
@@ -23,12 +23,7 @@ let video = new nmmes.Video({
 
     // Module order matters, the encoder should usually be last
     modules: [new encoder({
-        defaults: {
-            video: {
-                'c:{POS}': 'libx265',
-                'pixel_format': 'yuv420p10le'
-            }
-        }
+        'video-codec': 'libx265'
     })]
 });
 video.start();
