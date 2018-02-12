@@ -4,12 +4,11 @@ import {
     Logger
 } from './';
 
-const MODULE_VERSION = 1;
-
 import chalk from 'chalk';
 
 export default class Module {
     tolerance = 'required';
+    static MODULE_VERSION = 0;
     static options = {};
     constructor(info, options = {}) {
         this.displayName = this.constructor.name;
@@ -17,8 +16,8 @@ export default class Module {
             throw new Error(`Module ${this.displayName} must provide an info object.`);
         }
 
-        if (info.nmmes && info.nmmes.moduleSysVersion < MODULE_VERSION) {
-            Logger.warn(`Module ${this.displayName}\'s system version [${info.nmmes.moduleSysVersion}] is lower than the required version [${MODULE_VERSION}].`);
+        if (info.nmmes && info.nmmes.moduleSysVersion < Module.MODULE_VERSION) {
+            Logger.warn(`Module ${this.displayName}\'s system version [${info.nmmes.moduleSysVersion}] is lower than the required version [${Module.MODULE_VERSION}].`);
         }
 
         this.info = info;
