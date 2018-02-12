@@ -1,10 +1,16 @@
 import chalk from 'chalk';
 import tracer from 'tracer';
 
-const moduleRegex = /node_modules\/(.*?(?=\/))/;
+const moduleRegex = /nmmes-(.+(?=\/))/;
 
 const options = {
-    format: "{{timestamp}} ({{method}}) [{{file}}:{{line}}] <{{title}}> {{message}}",
+    format: process.env.NODE_ENV === 'development' ? "<{{title}}> {{timestamp}} ({{method}}) [{{file}}:{{line}}] {{message}}" : [
+        "<{{title}}> {{message}}",
+        {
+            debug: " <{{title}}>{{timestamp}} [{{file}}:{{line}}] {{message}}",
+            trace: " <{{title}}>{{timestamp}} ({{method}}) [{{file}}:{{line}}] {{message}}"
+        }
+    ],
     dateformat: "HH:MM:ss.L",
     filters: [{
         trace: chalk.magenta,
@@ -16,7 +22,7 @@ const options = {
     preprocess: function(data) {
         data.title = data.title.toUpperCase();
         const matches = data.path.match(moduleRegex);
-        data.file = matches && matches[1] ? `${matches[1]}>${data.file}` : data.file;
+        data.file = matches && matches[1] ? `${matches[1]} > ${data.file}` : data.file;
     },
     transport: data => {
         process.stdout.write(data.output + "\n");
