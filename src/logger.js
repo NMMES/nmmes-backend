@@ -7,8 +7,8 @@ const options = {
     format: process.env.NODE_ENV === 'development' ? "<{{title}}> {{timestamp}} ({{method}}) [{{file}}:{{line}}] {{message}}" : [
         "<{{title}}> {{message}}",
         {
-            debug: " <{{title}}>{{timestamp}} [{{file}}:{{line}}] {{message}}",
-            trace: " <{{title}}>{{timestamp}} ({{method}}) [{{file}}:{{line}}] {{message}}"
+            debug: "<{{title}}> {{timestamp}} [{{file}}:{{line}}] {{message}}",
+            trace: "<{{title}}> {{timestamp}} ({{method}}) [{{file}}:{{line}}] {{message}}"
         }
     ],
     dateformat: "HH:MM:ss.L",
