@@ -153,7 +153,7 @@ export default class Video {
                 const module = this.modules[idx];
                 Logger.trace(`Running module ${chalk.bold(module.displayName)} [${chalk.bold(idx)}].`);
 
-                let results = await module.run(Object.assign({}, this.output.map));
+                let results = await module.run();
                 merge(this.output.map, results);
             }
         } catch (e) {
