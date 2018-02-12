@@ -4,6 +4,7 @@ import {
     Logger
 } from './';
 
+import semver from 'semver';
 import chalk from 'chalk';
 
 export default class Module {
@@ -16,8 +17,8 @@ export default class Module {
             throw new Error(`Module ${this.displayName} must provide an info object.`);
         }
 
-        if (info.nmmes && info.nmmes.moduleSysVersion < Module.MODULE_VERSION) {
-            Logger.warn(`Module ${this.displayName}\'s system version [${info.nmmes.moduleSysVersion}] is lower than the required version [${Module.MODULE_VERSION}].`);
+        if (!semver.satisfies(info.version, `${Module.MODULE_VERSION}.x`)) {
+            Logger.warn(`Module ${this.displayName}\'s system version [${info.version}] is not compadible with system version [${Module.MODULE_VERSION}].`);
         }
 
         this.info = info;
