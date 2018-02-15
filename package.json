@@ -12,8 +12,7 @@
         "dev": "webpack --env=development --watch",
         "update-submodules": "git submodule foreach git pull origin master",
         "test": "npm run update-submodules && mocha-webpack --webpack-config webpack.config.babel.js --recursive --ui tdd --check-leaks src test",
-        "build": "webpack --env=production --progress",
-        "build-dev": "webpack --env=development --progress"
+        "build": "webpack --env=production --progress"
     },
     "main": "dist/nmmes-backend.js",
     "repository": {

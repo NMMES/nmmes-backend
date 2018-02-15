@@ -92,6 +92,13 @@ export default class Video {
 
         let metadata = await ffmpeg.ffprobeAsync(this.input.path);
 
+        for (const stream of metadata.streams) {
+            if (stream.codec_type === 'video') {
+                metadata.format.video_codec = stream.codec_name;
+                break;
+            }
+        }
+
         if (isNaN(metadata.format.duration)) {
 
             Logger.trace('Invalid duration:', chalk.bold(metadata.format.duration));
