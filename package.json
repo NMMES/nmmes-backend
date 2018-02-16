@@ -5,7 +5,7 @@
     "author": "Ayrton Sparling",
     "license": "MIT",
     "engines": {
-        "node": ">=6.4.0"
+        "node": ">=9.0.0"
     },
     "scripts": {
         "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text npm test",
