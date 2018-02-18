@@ -43,13 +43,19 @@ export default class Video {
             input: { ...Path.parse(options.input.path),
                 map: {
                     streams: {},
-                    format: {}
+                    format: {
+                        output: {},
+                        input: {}
+                    }
                 }
             },
             output: { ...Path.parse(options.output.path),
                 map: {
                     streams: {},
-                    format: {}
+                    format: {
+                        output: {},
+                        input: {}
+                    }
                 }
             }
         }, options);
