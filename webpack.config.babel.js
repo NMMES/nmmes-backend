@@ -28,8 +28,8 @@ module.exports = function(env) {
             libraryTarget: "umd",
             publicPath: '',
             filename: packageJson.name + '.js',
-            devtoolModuleFilenameTemplate: '[absolute-resource-path]',
-            devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
+            // devtoolModuleFilenameTemplate: '[absolute-resource-path]',
+            // devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
         },
 
         externals: [nodeExternals()],
@@ -53,8 +53,7 @@ module.exports = function(env) {
                     NODE_ENV: env
                 }),
                 new webpack.BannerPlugin({
-                    banner: 'require("source-map-support").install();',
-                    raw: true
+                    banner: 'import \'source-map-support/register\';'
                 })
             ])
             .concat(env === 'production' ? [
