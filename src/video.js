@@ -9,10 +9,13 @@ import moment from 'moment';
 require("moment-duration-format");
 import fileSize from 'filesize';
 import Path from 'path';
-import Bluebird from 'bluebird';
+import util from 'util';
 import {
     merge
 } from 'lodash';
+import fs from 'fs-extra';
+import ffmpeg from 'fluent-ffmpeg';
+const ffprobe = util.promisify(ffmpeg.ffprobe);
 
 function once(promise) {
     let resolved = false,
@@ -24,9 +27,6 @@ function once(promise) {
         return resolved = promise.apply(_self, arguments);
     }
 }
-
-const fs = Bluebird.promisifyAll(require("fs"));
-const ffmpeg = Bluebird.promisifyAll(require("fluent-ffmpeg"));
 
 export default class Video {
     constructor(options) {
@@ -70,7 +70,7 @@ export default class Video {
     async _initializeOutput() {
         Logger.trace('Generating metadata for output...');
 
-        let metadata = await ffmpeg.ffprobeAsync(this.output.path);
+        let metadata = await ffprobe(this.output.path);
 
         if (isNaN(metadata.format.duration)) {
 
@@ -96,7 +96,7 @@ export default class Video {
     _initialize = once(async () => {
         Logger.trace('Generating metadata for input...');
 
-        let metadata = await ffmpeg.ffprobeAsync(this.input.path);
+        let metadata = await ffprobe(this.input.path);
 
         for (const stream of metadata.streams) {
             if (stream.codec_type === 'video') {
@@ -197,7 +197,7 @@ export default class Video {
 
         Logger.debug(`File output to ${chalk.bold(this.output.path)}.`);
 
-        let stats = await Promise.all([fs.statAsync(this.input.path), fs.statAsync(this.output.path)]);
+        let stats = await Promise.all([fs.stat(this.input.path), fs.stat(this.output.path)]);
 
         let outputSize = fileSize(stats[1].size);
         let reductionPercent = (stats[1].size / stats[0].size * 100).toFixed(2);
