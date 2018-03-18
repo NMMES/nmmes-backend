@@ -49,9 +49,6 @@ module.exports = function(env) {
         },
 
         plugins: ([
-                new webpack.EnvironmentPlugin({
-                    NODE_ENV: env
-                }),
                 new webpack.BannerPlugin({
                     banner: 'import \'source-map-support/register\';'
                 })

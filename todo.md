@@ -4,7 +4,6 @@
     - vobsub2png
     - tesseract --oem 1 out.png stdout
 * Screenshots
-* Multipass (Low priority)
 
 
 # Video hashing

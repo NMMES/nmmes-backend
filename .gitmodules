@@ -1,6 +1,3 @@
-[submodule "nmmes-test-files"]
-	path = nmmes-test-files
-	url = https://github.com/NMMES/nmmes-test-files
 [submodule "test/nmmes-test-files"]
 	path = test/nmmes-test-files
 	url = https://github.com/NMMES/nmmes-test-files
