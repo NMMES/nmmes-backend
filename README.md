@@ -1,6 +1,3 @@
-## This is pre-alpha software.
-## --Work in Progress--
-
 # NMMES-backend
 
 The NMMES backend is the processing portion of the NMMES family. It provides a node API for applications to encode media using a set of modules.

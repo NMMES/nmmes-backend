@@ -50,8 +50,10 @@ module.exports = function(env) {
 
         plugins: ([
                 new webpack.BannerPlugin({
-                    banner: 'import \'source-map-support/register\';'
-                })
+                    banner: 'require("source-map-support").install();',
+                    raw: true,
+                    entryOnly: false
+                }),
             ])
             .concat(env === 'production' ? [
 
