@@ -10,8 +10,8 @@ fs.ensureDirSync(tempDir);
 let symLink = path.join(tempDir, 'node_modules');
 
 module.exports = function(env) {
-    env = env ? env : 'development';
-
+    env = options.mode ? options.mode : env ? env : 'development';
+    
     if (env === 'development' && !fs.existsSync(symLink))
         fs.symlinkSync(path.resolve(__dirname, 'node_modules'), symLink, 'dir');
 

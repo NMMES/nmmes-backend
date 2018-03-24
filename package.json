@@ -8,6 +8,7 @@
         "node": ">=9.0.0"
     },
     "scripts": {
+        "prepare": "npm run build",
         "dev": "webpack-cli --mode=development --watch",
         "build": "webpack-cli --mode=production --progress",
         "postversion": "git push"
