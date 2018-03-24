@@ -1,6 +1,6 @@
 {
     "name": "nmmes-backend",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "description": "A modular video encoder/transcoder.",
     "author": "Ayrton Sparling",
     "license": "MIT",
