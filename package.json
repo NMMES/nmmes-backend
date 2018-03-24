@@ -19,14 +19,14 @@
         "url": "https://github.com/NMMES/nmmes-backend.git"
     },
     "dependencies": {
-        "chalk": "^2.1.0",
-        "filesize": "^3.5.10",
+        "chalk": "^2.3.2",
+        "filesize": "^3.6.1",
         "fluent-ffmpeg": "^2.1.2",
         "fs-extra": "^5.0.0",
         "lodash.merge": "^4.6.1",
         "moment": "^2.19.1",
         "moment-duration-format": "^2.2.2",
-        "nmmes-tracer": "0.0.3",
+        "nmmes-tracer": "0.0.4",
         "semver": "^5.5.0",
         "source-map-support": "^0.5.0"
     },
