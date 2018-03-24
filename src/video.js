@@ -12,7 +12,7 @@ import Path from 'path';
 import util from 'util';
 import merge from 'lodash.merge';
 import fs from 'fs-extra';
-import anitomy from 'anitomyjs';
+// import anitomy from 'anitomyjs';
 import ffmpeg from 'fluent-ffmpeg';
 const ffprobe = util.promisify(ffmpeg.ffprobe);
 
@@ -67,7 +67,7 @@ export default class Video {
     }
 
     async _initializeOutput() {
-        this.output.anitomy = await Video.parseFilename(this.output.base);
+        // this.output.anitomy = await Video.parseFilename(this.output.base);
 
         Logger.trace('Generating metadata for output...');
 
@@ -95,7 +95,7 @@ export default class Video {
     }
 
     _initialize = once(async () => {
-        this.input.anitomy = await Video.parseFilename(this.input.base);
+        // this.input.anitomy = await Video.parseFilename(this.input.base);
 
         Logger.trace('Generating metadata for input...');
 
@@ -228,12 +228,12 @@ export default class Video {
                 }).run();
         });
     }
-    static parseFilename(filename) {
-        Logger.trace('Parsing', filename);
-        return new Promise((resolve, reject) => {
-            anitomy.parse(filename, function(elems) {
-                return resolve(elems);
-            });
-        })
-    }
+    // static parseFilename(filename) {
+    //     Logger.trace('Parsing', filename);
+    //     return new Promise((resolve, reject) => {
+    //         anitomy.parse(filename, function(elems) {
+    //             return resolve(elems);
+    //         });
+    //     })
+    // }
 }

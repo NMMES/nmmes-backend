@@ -9,7 +9,8 @@
     },
     "scripts": {
         "dev": "webpack-cli --mode=development --watch",
-        "build": "webpack-cli --mode=production --progress"
+        "build": "webpack-cli --mode=production --progress",
+        "postversion": "git push"
     },
     "main": "dist/nmmes-backend.js",
     "repository": {
@@ -17,7 +18,6 @@
         "url": "https://github.com/NMMES/nmmes-backend.git"
     },
     "dependencies": {
-        "anitomyjs": "^1.4.4",
         "chalk": "^2.1.0",
         "filesize": "^3.5.10",
         "fluent-ffmpeg": "^2.1.2",
