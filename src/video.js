@@ -28,8 +28,9 @@ function once(promise) {
 }
 
 export default class Video {
-    constructor(options) {
-        Logger.debug(`Creating ${chalk.bold(Path.basename(options.input.path))}.`);
+    constructor(options, logger = Logger) {
+        this.logger = logger;
+        this.logger.debug(`Creating ${chalk.bold(Path.basename(options.input.path))}.`);
 
         if (!options.input.path)
             throw new Error('options.input.path must be provided.');
@@ -63,24 +64,24 @@ export default class Video {
             module.attach(this);
         }
 
-        Logger.trace('Video created:\n', this);
+        this.logger.trace('Video created:\n', this);
     }
 
     async _initializeOutput() {
         // this.output.anitomy = await Video.parseFilename(this.output.base);
 
-        Logger.trace('Generating metadata for output...');
+        this.logger.trace('Generating metadata for output...');
 
         let metadata = await ffprobe(this.output.path);
 
         if (isNaN(metadata.format.duration)) {
 
-            Logger.trace('Invalid duration:', chalk.bold(metadata.format.duration));
-            Logger.debug(`Duration invalid, attempting to calculate manually...`);
+            this.logger.trace('Invalid duration:', chalk.bold(metadata.format.duration));
+            this.logger.debug(`Duration invalid, attempting to calculate manually...`);
 
             let duration = await Video._calcDuration(this.output.path);
 
-            Logger.debug(`Duration calculated to ${duration} second(s).`);
+            this.logger.debug(`Duration calculated to ${duration} second(s).`);
             metadata.format.duration = duration;
         }
 
@@ -97,7 +98,7 @@ export default class Video {
     _initialize = once(async () => {
         // this.input.anitomy = await Video.parseFilename(this.input.base);
 
-        Logger.trace('Generating metadata for input...');
+        this.logger.trace('Generating metadata for input...');
 
         let metadata = await ffprobe(this.input.path);
 
@@ -110,12 +111,12 @@ export default class Video {
 
         if (isNaN(metadata.format.duration)) {
 
-            Logger.trace('Invalid duration:', chalk.bold(metadata.format.duration));
-            Logger.debug(`Duration invalid, attempting to calculate manually...`);
+            this.logger.trace('Invalid duration:', chalk.bold(metadata.format.duration));
+            this.logger.debug(`Duration invalid, attempting to calculate manually...`);
 
             let duration = await Video._calcDuration(this.input.path);
 
-            Logger.debug(`Duration calculated to ${duration} second(s).`);
+            this.logger.debug(`Duration calculated to ${duration} second(s).`);
             metadata.format.duration = duration;
         }
 
@@ -149,7 +150,7 @@ export default class Video {
     async run() {
         this.running = true;
         this.started = true;
-        Logger.info(`Started processing ${chalk.bold(this.input.base)} -> ${chalk.bold(this.output.base)}.`);
+        this.logger.info(`Started processing ${chalk.bold(this.input.base)} -> ${chalk.bold(this.output.base)}.`);
         this.startTime = new Date();
 
         await this._initialize();
@@ -167,7 +168,7 @@ export default class Video {
         try {
             for (const idx in this.modules) {
                 const module = this.modules[idx];
-                Logger.trace(`Running module ${chalk.bold(module.displayName)} [${chalk.bold(idx)}].`);
+                this.logger.trace(`Running module ${chalk.bold(module.displayName)} [${chalk.bold(idx)}].`);
 
                 let results = await module.run();
                 merge(this.output.map, results);
@@ -184,8 +185,8 @@ export default class Video {
         this.stopTime = new Date();
 
         if (err) {
-            Logger.error(`Video stopped processing with error: ${err.message}`);
-            Logger.debug(err);
+            this.logger.error(`Video stopped processing with error: ${err.message}`);
+            this.logger.debug(err);
             this.error = err;
             throw err;
         }
@@ -194,17 +195,17 @@ export default class Video {
         });
 
         if (!fs.existsSync(this.output.path)) {
-            Logger.warn('No output created.');
+            this.logger.warn('No output created.');
             return;
         }
 
-        Logger.debug(`File output to ${chalk.bold(this.output.path)}.`);
+        this.logger.debug(`File output to ${chalk.bold(this.output.path)}.`);
 
         let stats = await Promise.all([fs.stat(this.input.path), fs.stat(this.output.path)]);
 
         let outputSize = fileSize(stats[1].size);
         let reductionPercent = (stats[1].size / stats[0].size * 100).toFixed(2);
-        Logger.info(`Finished processing ${chalk.bold(this.input.base)} [${chalk.yellow(duration)}] [${chalk.yellow(outputSize)}] [${chalk.yellow(reductionPercent+'%')}].`);
+        this.logger.info(`Finished processing ${chalk.bold(this.input.base)} [${chalk.yellow(duration)}] [${chalk.yellow(outputSize)}] [${chalk.yellow(reductionPercent+'%')}].`);
     }
 
     static _calcDuration(input) {
@@ -212,9 +213,6 @@ export default class Video {
             ffmpeg(input)
                 .outputFormat('null')
                 .output('-')
-                .on('start', function(commandLine) {
-                    Logger.trace('[FFMPEG] Query:', commandLine);
-                })
                 .on('error', function(err) {
                     reject(err);
                 })
@@ -223,7 +221,6 @@ export default class Video {
                     let lastTime = lines[lines.length - 3];
                     let duration = lastTime.match(new RegExp('time=(([0-9]|\:|\.)+) bitrate'))[1];
                     let seconds = moment.duration(duration).format("s", 6);
-                    Logger.trace(`Duration manually calculated to ${seconds} second(s).`);
                     resolve(seconds);
                 }).run();
         });

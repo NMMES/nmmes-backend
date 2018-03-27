@@ -11,14 +11,15 @@ export default class Module {
     tolerance = 'required';
     static MODULE_VERSION = 0;
     static options = {};
-    constructor(info, options = {}) {
+    constructor(info, options = {}, logger = Logger) {
+        this.logger = logger;
         this.displayName = this.constructor.name;
         if (typeof info === 'undefined') {
             throw new Error(`Module ${this.displayName} must provide an info object.`);
         }
 
         if (!semver.satisfies(info.version, `${Module.MODULE_VERSION}.x`)) {
-            Logger.warn(`Module ${this.displayName}\'s system version [${info.version}] is not compadible with system version [${Module.MODULE_VERSION}].`);
+            this.logger.warn(`Module ${this.displayName}\'s system version [${info.version}] is not compatible with system version [${Module.MODULE_VERSION}].`);
         }
 
         this.info = info;
@@ -26,7 +27,7 @@ export default class Module {
             options
         });
 
-        Logger.trace(`Module ${chalk.bold(this.displayName)} has been created with options:`, options);
+        this.logger.trace(`Module ${chalk.bold(this.displayName)} has been created with options:`, options);
     }
 
     attach(video) {
@@ -34,6 +35,7 @@ export default class Module {
             throw new Error('Video already attached.');
 
         this.video = video;
+        this.logger = this.video.logger;
     }
 
     async run() {
@@ -42,11 +44,11 @@ export default class Module {
         let results = await this.executable(Object.assign({}, this.video.output.map));
 
         if (typeof results === 'undefined')
-            Logger.warn(`Module ${this.displayName} returned an undefined result.`)
+            this.logger.warn(`Module ${this.displayName} returned an undefined result.`)
         else if (typeof results !== 'object')
             throw new TypeError(`Module ${this.displayName} returned a non object result.`);
 
-        Logger.trace(`Module ${chalk.bold(this.displayName)} has finished. Results:\n`, JSON.stringify(results));
+        this.logger.trace(`Module ${chalk.bold(this.displayName)} has finished. Results:\n`, JSON.stringify(results));
 
         return results;
     }
