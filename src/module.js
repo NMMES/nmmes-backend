@@ -11,8 +11,8 @@ export default class Module {
     tolerance = 'required';
     static MODULE_VERSION = 0;
     static options = {};
-    constructor(info, options = {}, logger = Logger) {
-        this.logger = logger;
+    constructor(info, options = {}, logger) {
+        this.logger = logger ? logger : Logger;
         this.displayName = this.constructor.name;
         if (typeof info === 'undefined') {
             throw new Error(`Module ${this.displayName} must provide an info object.`);
