@@ -2,10 +2,10 @@ import chalk from 'chalk';
 import tracer from 'nmmes-tracer';
 const moduleRegex = /nmmes-(.+(?=\/))/;
 
-let logger = new tracer.Logger({
+export default new tracer.Logger({
     levels: ['trace', 'debug', 'log', 'info', 'warn', 'error', 'fatal'],
     level: 'log',
-    format: process.env.NMMES_DEBUG === 'true' ? "<{{title}}> {{timestamp}} ({{method}}) [{{file}}:{{line}}] {{message}}" : ["<{{=it.title}}> {{=it.message}}",
+    format: process.env.NMMES_DEBUG === 'true' ? "<{{=it.title}}> {{=it.timestamp}} ({{=it.method}}) [{{=it.file}}:{{=it.line}}] {{=it.message}}" : ["<{{=it.title}}> {{=it.message}}",
         {
             debug: "<{{=it.title}}> {{=it.timestamp}} [{{=it.file}}:{{=it.line}}] {{=it.message}}",
             trace: "<{{=it.title}}> {{=it.timestamp}} ({{=it.method}}) [{{=it.file}}:{{=it.line}}] {{=it.message}}"
@@ -28,5 +28,3 @@ let logger = new tracer.Logger({
     },
     transports: [new tracer.transports.Console()]
 });
-
-export default logger;
