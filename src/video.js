@@ -190,7 +190,7 @@ export default class Video {
             this.error = err;
             throw err;
         }
-        let duration = moment.duration(moment(this.stopTime).diff(this.startTime), 'milliseconds').format('h:mm:ss.SSS', {
+        let duration = this.duration = moment.duration(moment(this.stopTime).diff(this.startTime), 'milliseconds').format('h:mm:ss.SSS', {
             trim: false
         });
 

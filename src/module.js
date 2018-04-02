@@ -35,7 +35,6 @@ export default class Module {
             throw new Error('Video already attached.');
 
         this.video = video;
-        this.logger = this.video.logger;
     }
 
     async run() {
