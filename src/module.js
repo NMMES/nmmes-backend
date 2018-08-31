@@ -4,22 +4,16 @@ import {
     Logger
 } from './';
 
-import semver from 'semver';
 import chalk from 'chalk';
 
 export default class Module {
     tolerance = 'required';
-    static MODULE_VERSION = 0;
     static options = {};
     constructor(info, options = {}, logger) {
         this.logger = logger ? logger : Logger;
         this.displayName = this.constructor.name;
         if (typeof info === 'undefined') {
             throw new Error(`Module ${this.displayName} must provide an info object.`);
-        }
-
-        if (!semver.satisfies(info.version, `${Module.MODULE_VERSION}.x`)) {
-            this.logger.warn(`Module ${this.displayName}\'s system version [${info.version}] is not compatible with system version [${Module.MODULE_VERSION}].`);
         }
 
         this.info = info;

@@ -4,7 +4,7 @@ const moduleRegex = /nmmes-(.+(?=\/))/;
 
 export default new tracer.Logger({
     levels: ['trace', 'debug', 'log', 'info', 'warn', 'error', 'fatal'],
-    level: 'log',
+    level: process.env.NMMES_DEBUG === 'true'? 'trace' : 'log',
     format: process.env.NMMES_DEBUG === 'true' ? "<{{=it.title}}> {{=it.timestamp}} ({{=it.method}}) [{{=it.file}}:{{=it.line}}] {{=it.message}}" : ["<{{=it.title}}> {{=it.message}}",
         {
             debug: "<{{=it.title}}> {{=it.timestamp}} [{{=it.file}}:{{=it.line}}] {{=it.message}}",
