@@ -8,6 +8,7 @@ import {
 import 'must/register';
 
 import * as nmmes from '../';
+nmmes.Logger.level = 'error';
 
 const tests = [new Suite('Video', [
     new Test('should run to completion successfully', async function() {
@@ -22,7 +23,6 @@ const tests = [new Suite('Video', [
                 path: output
             },
         });
-        nmmes.Logger.level = 0;
         await video.run();
     })
 ])];
