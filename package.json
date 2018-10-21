@@ -10,38 +10,32 @@
     "scripts": {
         "prepare": "npm run build",
         "test": "universalis-tester ./test/index.js",
-        "dev": "webpack-cli --mode=development --watch",
-        "build": "webpack-cli --mode=production --progress",
         "postversion": "git push && npm publish"
     },
-    "main": "dist/nmmes-backend.js",
+    "main": "src/index.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/NMMES/nmmes-backend.git"
     },
     "dependencies": {
         "chalk": "^2.4.1",
+        "esm": "^3.0.84",
         "filesize": "^3.6.1",
         "fluent-ffmpeg": "^2.1.2",
         "fs-extra": "^7.0.0",
         "lodash.merge": "^4.6.1",
         "moment": "^2.22.2",
         "moment-duration-format": "^2.2.2",
-        "nmmes-tracer": "0.0.4",
-        "semver": "^5.5.1",
-        "source-map-support": "^0.5.9"
+        "nmmes-tracer": "0.0.5",
+        "semver": "^5.6.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.0.0",
-        "@babel/preset-env": "^7.0.0",
-        "babel-eslint": "^9.0.0",
-        "babel-loader": "^8.0.0",
-        "babel-plugin-module-resolver": "^3.1.1",
-        "babel-plugin-transform-class-properties": "^6.24.1",
-        "eslint": "^5.4.0",
+        "eslint": "^5.7.0",
+        "must": "^0.13.4",
         "source-map-loader": "^0.2.4",
-        "webpack": "^4.17.1",
-        "webpack-cli": "^3.1.0",
+        "universalis-tester": "0.0.5",
+        "webpack": "^4.22.0",
+        "webpack-cli": "^3.1.2",
         "webpack-node-externals": "^1.7.2"
     }
 }

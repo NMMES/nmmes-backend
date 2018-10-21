@@ -6,8 +6,6 @@ import {
 } from './';
 
 export default class Module {
-    tolerance = 'required';
-    static options = {};
     constructor(info, options = {}, logger) {
         this.logger = logger ? logger : Logger;
         this.displayName = this.constructor.name;
@@ -17,7 +15,8 @@ export default class Module {
 
         this.info = info;
         Object.assign(this, {
-            options
+            tolerance: 'required',
+            ...options
         });
 
         this.logger.trace(`Module ${chalk.bold(this.displayName)} has been created with options:`, options);

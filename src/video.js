@@ -96,7 +96,7 @@ export default class Video {
         this.output.metadata = metadata;
     }
 
-    _initialize = once(async () => {
+    async _initialize() {
         // this.input.anitomy = await Video.parseFilename(this.input.base);
 
         this.logger.trace('Generating metadata for input...');
@@ -146,7 +146,7 @@ export default class Video {
         }
 
         return this;
-    });
+    };
 
     async run() {
         this.running = true;
