@@ -1,10 +1,9 @@
 'use strict';
+import chalk from 'chalk';
 
 import {
     Logger
 } from './';
-
-import chalk from 'chalk';
 
 export default class Module {
     tolerance = 'required';

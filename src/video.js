@@ -1,19 +1,20 @@
 'use strict';
-
-import {
-    Logger
-} from './';
+import Path from 'path';
+import util from 'util';
 
 import chalk from 'chalk';
 import moment from 'moment';
 require("moment-duration-format");
 import fileSize from 'filesize';
-import Path from 'path';
-import util from 'util';
 import merge from 'lodash.merge';
 import fs from 'fs-extra';
-// import anitomy from 'anitomyjs';
 import ffmpeg from 'fluent-ffmpeg';
+// import anitomy from 'anitomyjs';
+
+import {
+    Logger
+} from './';
+
 const ffprobe = util.promisify(ffmpeg.ffprobe);
 
 function once(promise) {
